@@ -227,7 +227,10 @@ auto PenInputHandler::actionMotion(InputEvent const& event) -> bool {
         if (xournal->selection->isMoving()) {
             selection->mouseMove(pos.x, pos.y, pos.isAltDown());
         } else {
-            CursorSelectionType selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
+            CursorSelectionType selType = selection->getSelectionTypeForKeys(&pos);
+            if (selType == CURSOR_SELECTION_NONE) {
+                selType = selection->getSelectionTypeForPos(pos.x, pos.y, xournal->view->getZoom());
+            }
             xournal->view->getCursor()->setMouseSelectionType(selType);
         }
         return true;

@@ -44,6 +44,8 @@ enum AVAILABLECURSORS {
     CRSR_DRAWDIRCTRL,       // "
     CRSR_DRAWDIRSHIFTCTRL,  // "
     CRSR_RESIZE,
+    CRSR_INCREMENT,
+    CRSR_DECREMENT,
 
     CRSR_END_OF_CURSORS
 };
@@ -90,6 +92,8 @@ XournalppCursor::XournalppCursor(Control* control): control(control) {
 	cssCursors[CRSR_DRAWDIRCTRL         ] = 	{"",""};			// "
 	cssCursors[CRSR_DRAWDIRSHIFTCTRL    ] = 	{"",""};			// "
     cssCursors[CRSR_RESIZE              ] =     {"",""};            // "
+	cssCursors[CRSR_INCREMENT           ] = 	{"copy",	""};
+	cssCursors[CRSR_DECREMENT           ] = 	{"no-drop",	""};
 };
 // clang-format on
 
@@ -254,6 +258,12 @@ void XournalppCursor::updateCursor() {
                     break;
                 case CURSOR_SELECTION_DELETE:
                     setCursor(CRSR_PIRATE);
+                    break;
+                case CURSOR_SELECTION_ADD:
+                    setCursor(CRSR_INCREMENT);
+                    break;
+                case CURSOR_SELECTION_REMOVE:
+                    setCursor(CRSR_DECREMENT);
                     break;
                 default:
                     break;

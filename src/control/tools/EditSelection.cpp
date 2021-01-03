@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include "control/Control.h"
+#include "gui/inputdevices/PositionInputData.h"
 #include "gui/Layout.h"
 #include "gui/PageView.h"
 #include "gui/XournalView.h"
@@ -697,6 +698,20 @@ void EditSelection::ensureWithinVisibleArea() {
     this->view->getXournal()->ensureRectIsVisible(
             static_cast<int>(viewx + this->x * zoom), static_cast<int>(viewy + this->y * zoom),
             static_cast<int>(this->width * zoom), static_cast<int>(this->height * zoom));
+}
+
+/**
+ * Get the cursor type for currently pressed keys (0 if no keys are modifying the behavior
+ */
+auto EditSelection::getSelectionTypeForKeys(const PositionInputData *pos) -> CursorSelectionType {
+    if (pos->isControlDown()) {
+        return CURSOR_SELECTION_ADD;
+    }
+    if (pos->isAltDown()) {
+        return CURSOR_SELECTION_REMOVE;
+    }
+
+    return CURSOR_SELECTION_NONE;
 }
 
 /**

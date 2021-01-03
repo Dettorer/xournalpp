@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "control/Tool.h"
+#include "gui/inputdevices/PositionInputData.h"
 #include "model/Font.h"
 #include "model/PageRef.h"
 #include "model/Snapping.h"
@@ -180,6 +181,11 @@ public:
      * Move the selection
      */
     void moveSelection(double dx, double dy);
+
+    /**
+     * Get the cursor type for currently pressed keys
+     */
+    CursorSelectionType getSelectionTypeForKeys(const PositionInputData *pos);
 
     /**
      * Get the cursor type for the current position (if 0 then the default cursor should be used)

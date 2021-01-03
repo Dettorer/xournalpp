@@ -80,6 +80,11 @@ public:
     ~SelectObject() override = default;
 
     bool at(double x, double y) override {
+        auto currentSelection = view->xournal->getSelection();
+        std::vector<Element*> selectedElements;
+        if (currentSelection)
+            selectedElements = std::vector{*currentSelection->getElements()};
+
         BaseSelectObject::at(x, y);
 
         if (strokeMatch) {
@@ -87,8 +92,9 @@ public:
         }
 
         if (elementMatch) {
+            selectedElements.push_back(elementMatch);
             view->xournal->setSelection(new EditSelection(view->xournal->getControl()->getUndoRedoHandler(),
-                                                          elementMatch, view, view->page));
+                                                          selectedElements, view, view->page));
 
             view->repaintPage();
 
